@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>[Título do zine]</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="[Descrição do zine]" />
+    <meta name="theme-color" content="#000" />
+    <link rel="icon" type="image/png" href="#" />
+    
+    <!-- Configuração de estilos visuais e diagramação -->
+    <style>
+      /* Estilos para dispositivos e impressão, de preferência não alterar */
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      footer {
+        font-size: 80%;
+      }
+
+      /* Estilos para dispositivos apenas <- Mude aqui! */
+      @media screen {
+        body {
+          margin: 0 auto;
+          max-width: 700px;
+          background-color: white;
+          color: #222;
+          font-family: Georgia, "Times New Roman", Times, serif;
+        }
+
+        .zine-page {
+          margin-top: 32px;
+        }
+
+        .config-box {
+          display: block;
+          background-color: lightsalmon;
+          width: 100%;
+          padding: 1rem;
+        }
+      }
+
+      /* Estilos para impressão <- Mude aqui! */
+      @media print {
+
+        body {
+          font-size: 10pt;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        .mini-img {
+          max-width: 4.4rem;
+        }
+
+        /* Sistema de layout, não alterar daqui até o fim. */
+
+        .config-box, .print-info {
+          display: none;
+        }
+        
+        @page {
+          size: landscape;
+          margin: 0;
+          bleed: 0;
+        }
+
+        .zine-8 {
+          width: 100vw;
+          height: 100vh;
+          display: grid;
+          gap: 0px;
+          background: lightgrey;
+          grid-template-areas:
+            "page-5 page-4 page-3 page-2"
+            "page-6 page-7 page-8 page-1";
+          grid-template-columns: 25% 25% 25% 25%;
+          grid-template-rows: 50% 50%;
+          max-width: 100%;
+          max-height: 100%;
+        }
+
+        .zine-4 {
+          width: 100vw;
+          height: 200vh;
+          display: grid;
+          gap: 0px;
+          background: lightgrey;
+          grid-template-areas:
+            "page-8 page-1"
+            "page-6 page-3"
+            "page-2 page-7"
+            "page-4 page-5";
+          grid-template-columns: 50% 50%;
+          grid-template-rows: 25% 25% 25% 25%;
+          max-width: 100%;
+          max-height: 200%;
+        }
+
+        .zine-page {
+          border: 1px red solid;
+          background: white;
+          padding: 0.2rem;
+          overflow: hidden;
+        }
+
+        .zine-8 > .page-5,
+        .zine-8 > .page-4,
+        .zine-8 > .page-3,
+        .zine-8 > .page-2 {
+          transform: rotate(180deg);
+        }
+
+        .page-1 {
+          grid-area: page-1;
+        }
+
+        .page-2 {
+          grid-area: page-2;
+        }
+
+        .page-3 {
+          grid-area: page-3;
+        }
+
+        .page-4 {
+          grid-area: page-4;
+        }
+
+        .page-5 {
+          grid-area: page-5;
+        }
+
+        .page-6 {
+          grid-area: page-6;
+        }
+
+        .page-7 {
+          grid-area: page-7;
+        }
+
+        .page-8 {
+          grid-area: page-8;
+        }
+      }
+    </style>
+
+    <!-- Lógica da ferramenta de troca de layout -->
+    <script>
+      // Atualiza o layout quando seleciona no menu
+      function updateLayout(){
+        var radios = document.getElementsByName('layout');
+        for (var i = 0, length = radios.length; i < length; i++) {
+          if (radios[i].checked) {
+            currentLayout = radios[i].value;
+            if(currentLayout == 4) {
+              cssPagedMedia.size('portrait');
+            }
+            else {
+              cssPagedMedia.size('landscape');
+              
+            }
+            document.querySelector("body").className = (currentLayout == 4)? "zine-4" : "zine-8";
+            break;
+          }
+        }
+      }
+      
+      // Alterar orientação da página para cada layout
+      let cssPagedMedia = (function () {
+        var style = document.createElement('style');
+        document.head.appendChild(style);
+        return function (rule) {
+          style.innerHTML = rule;
+        };
+      }());
+      cssPagedMedia.size = (size) => {
+        cssPagedMedia('@page {size: ' + size + '}');
+      };
+      
+      // Começa com 8 páginas por lado como padrão
+      let currentLayout = 8;
+      updateLayout();
+      
+    </script>
+  </head>
+
+  <body class="zine-8">
+    
+    <section class="zine-page page-1">
+      <h1>Título do zine</h1>
+    </section>
+    <section class="zine-page page-2">
+      <!-- TODO: Page 2 content goes here. This is also the inside of the front cover, so you can be minimal or fit in as much content as possible! -->
+      <p>Página 2</p>
+    </section>
+    <section class="zine-page page-3">
+      <!-- TODO: Page 3 content here -->
+      <p>página 3</p>
+    </section>
+    <section class="zine-page page-4">
+      <!-- TODO: Page 4 - that's the halfway point, you're nearly there! -->
+      <p>página 4</p>
+    </section>
+    <section class="zine-page page-5">
+      <!-- TODO: You guessed it, page 5 content now -->
+      <p>página 5</p>
+    </section>
+    <section class="zine-page page-6">
+      <!-- TODO: Page 6, this is the last "page" but you can still keep going -->
+      <p>página 6</p>
+    </section>
+    <section class="zine-page page-7">
+      <!-- TODO: Page 7, this is the inside of the back cover -->
+      <p>página 7</p>
+    </section>
+    <section class="zine-page page-8">
+      <!-- TODO: You made it! Page 8, the back cover. Feel free to use this for attributions. Hey, let me know if you want a review. I'll give you ★★★★★ and an amazing quote -->
+      <p>página 8</p>
+    </section>
+    <footer class="print-info config-box">
+        <h2>Printing options for 8-page zines</h2>
+        <input type="radio" name="layout" id="" checked value="8" onclick="updateLayout()">8 pages per side, for single-sided printing.</input>
+        <input type="radio" name="layout" id="" value="4" onclick="updateLayout()">4 pages per side, for double-sided printing.</input>
+        <input type="button" value="Print" onclick="window.print()">
+    </footer>
+    
+  </body>
+</html>
